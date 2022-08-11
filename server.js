@@ -36,6 +36,6 @@ catch(err){
     res.json({message:err});
 }
 
-app.listen(4000, ()=>{
-    console.log("Server is running!")
+app.listen(process.env.PORT || 4000, ()=>{
+    console.log("Server is running on port 4000!")
 })

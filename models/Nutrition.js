@@ -14,7 +14,7 @@ const RecipeSchema = mongoose.Schema({
         type: Array
     },
     nutrition: {
-        type: Number
+        type: String
     },
     instruction:{
         type: String

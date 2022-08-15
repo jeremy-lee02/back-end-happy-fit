@@ -29,7 +29,7 @@ createFoodRecipe: async(req,res)=>{
         name:req.body.name,
         description:req.body.description,
         ingredient:req.body.ingredient,
-        calories:req.body.calories,
+        nutrition:req.body.nutrition,
         instruction:req.body.instruction
     })
     
@@ -49,7 +49,7 @@ updateFoodRecipe: async(req,res)=>{
         name:req.body.name,
         description:req.body.description,
         ingredient:req.body.ingredient,
-        calories:req.body.calories,
+        nutrition:req.body.nutrition,
         instruction:req.body.instruction
     }})
     res.json(updatedNutrition)}

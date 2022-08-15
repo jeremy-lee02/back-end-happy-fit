@@ -16,8 +16,8 @@ showAllExercise: async(req,res)=>{
     const exercises = workout.slice(startIndex, endIndex)
     if (!page){
         res.json(workout)
-    }
-    res.json(exercises)}  
+    } else{res.json(exercises)} }
+     
     catch(err){
     res.json({message:err})
     }},
@@ -98,7 +98,6 @@ filterExercisesByCategory: async(req,res)=>{
     try{
     const workout = await Exercise.find()
     const result = []
-    let cat = []
     for (let i =0; i < workout.length; i++){
         for (let j =0;j<workout[i].category.length;j++){
         if (workout[i].category.includes(req.params.cat)){

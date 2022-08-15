@@ -36,7 +36,4 @@ router.delete('/:id',authenticateToken, nutritionController.deleteFoodRecipe)
 
 router.get('/filterByName/:name',nutritionController.filterFoodByName)
 
-
-router.get('/filterByIngredient/:ingredient',nutritionController.filterFoodByIngredient)
-
 module.exports = router

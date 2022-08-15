@@ -69,7 +69,20 @@ deleteFoodRecipe: async(req,res)=>{
     }},
 
 
-
+filterFoodByName: async(req,res)=>{
+    try{
+        const recipe = await Nutrition.find()
+        const result =[]
+    for (let i = 0; i < recipe.length; i++) {
+        console.log(recipe[i])
+        if (recipe[i].name.includes(req.params.name)){
+            result.push(recipe[i])
+        }}
+    res.json(result)
+    }
+    catch(err){
+        res.json({message:err})
+    }},
 }
 
 

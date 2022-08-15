@@ -69,7 +69,7 @@ register: async (req, res) => {
     }
   },
 
-  //LOGIN
+
 login: async (req, res) => {
     try {
       const currentUser = await User.findOne({ username: req.body.username })
@@ -104,7 +104,7 @@ login: async (req, res) => {
     }
   },
 
-//Log out
+
 signOut: async (req, res) => {
     //Clear cookies when user logs out
     refreshTokens = refreshTokens.filter((token) => token !== req.body.token)
@@ -112,7 +112,7 @@ signOut: async (req, res) => {
     res.status(200).json("Logged out successfully!")
   },
   
-//Show all existing accounts
+
 getAllUsers: async (req,res)=> {
     try{
       const users =await User.find()

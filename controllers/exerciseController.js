@@ -7,8 +7,17 @@ const exerciseController = {
 
 showAllExercise: async(req,res)=>{
     try{
+    let page = req.query.page
+    const limit = 10
+    const startIndex = (page - 1)*limit
+    const endIndex =page * limit
+
     const workout =await Exercise.find()
-    res.json(workout)}
+    const exercises = workout.slice(startIndex, endIndex)
+    if (!page){
+        res.json(workout)
+    }
+    res.json(exercises)}  
     catch(err){
     res.json({message:err})
     }},
@@ -71,8 +80,14 @@ deleteExercise: async(req,res)=>{
 
 filterExercisesByName: async(req,res)=>{
     try{
-        const workout = await Exercise.find({name:req.params.name})
-    res.json(workout)
+    const workout = await Exercise.find()
+    const result =[]
+    for (let i = 0; i < workout.length; i++) {
+        console.log(workout[i])
+        if (workout[i].name.includes(req.params.name)){
+            result.push(workout[i])
+        }}
+    res.json(result)
     }
     catch(err){
         res.json({message:err})
@@ -81,8 +96,15 @@ filterExercisesByName: async(req,res)=>{
 
 filterExercisesByCategory: async(req,res)=>{
     try{
-    const workout = await Exercise.find({category:req.params.category})
-    res.json(workout)
+    const workout = await Exercise.find()
+    const result = []
+    let cat = []
+    for (let i =0; i < workout.length; i++){
+        for (let j =0;j<workout[i].category.length;j++){
+        if (workout[i].category.includes(req.params.cat)){
+            result.push(workout[i])
+    }}}
+    res.json(result)
 }
     catch(err)
     {res.json({message:err})}

@@ -13,7 +13,7 @@ const RecipeSchema = mongoose.Schema({
     ingredient:{
         type: Array
     },
-    calories:{
+    nutrition: {
         type: Number
     },
     instruction:{

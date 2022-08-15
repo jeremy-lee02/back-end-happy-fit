@@ -22,7 +22,7 @@ auth.post('/login',authController.login)
 
 auth.post('/signup',authController.register)
 
-auth.delete('/signout', authController.signOut)
+auth.delete('/signout',authenticateToken, authController.signOut)
 
 auth.get('/users',authenticateToken,authController.getAllUsers)
 

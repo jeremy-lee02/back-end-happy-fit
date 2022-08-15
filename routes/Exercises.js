@@ -41,7 +41,7 @@ router.get('/filterByName/:name', exerciseController.filterExercisesByName)
 
 
 //Filter exercise by category
-router.get('/filterByCategory/:cat', exerciseController.filterExercisesByDifficulty)
+router.get('/filterByCategory/:cat', exerciseController.filterExercisesByCategory)
 
 
 //Filter exercise by difficulty

@@ -9,8 +9,7 @@ const authController = {
 
 createAccessTok: (user) => {
   return jwt.sign({
-    id: user.id,
-    isAdmin: user.admin,
+    id: user.id
   },
   process.env.SECRET_ACCESS_TOKEN,
   { expiresIn: "15m" }
@@ -18,8 +17,7 @@ createAccessTok: (user) => {
     
 createRefreshTok: (user) => {
   return jwt.sign({
-    id: user.id,
-    isAdmin: user.isAdmin,
+    id: user.id
   },
   process.env.SECRET_REFRESH_TOKEN,
   { expiresIn: "365d" }

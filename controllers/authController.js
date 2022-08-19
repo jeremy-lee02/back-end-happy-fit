@@ -97,8 +97,7 @@ login: async (req, res) => {
         const refreshTok = authController.createRefreshTok(currentUser)
         refreshTokens.push(refreshTok);
         //STORE REFRESH TOKEN IN COOKIE
-        const { ...others } = currentUser
-        res.status(200).json({ ...others, accessTok, refreshTok })
+        res.status(200).json({ currentUser, accessTok, refreshTok })
       } 
     } catch (err) {
       res.json({message:err})

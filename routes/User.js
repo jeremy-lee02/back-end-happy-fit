@@ -16,6 +16,8 @@ auth.delete('/signout',middlewareController.authenticateToken, authController.si
 
 auth.get('/users',middlewareController.authenticateToken,authController.getAllUsers)
 
+auth.get('/user/:id',middlewareController.authenticateToken,authController.getUserById)
+
 auth.patch('/user/:id',middlewareController.authenticateToken, authController.updateUserInfo)
 
 auth.delete('/user/:id',middlewareController.authenticateToken,authController.deleteUser)

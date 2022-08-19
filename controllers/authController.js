@@ -141,6 +141,7 @@ getUserById: async (req,res)=> {
 
 //Change password/email
 updateUserInfo: async(req,res)=>{
+
   const saltHash = await bcrypt.genSalt(10)
   const encryptedNewPassword = await bcrypt.hash(req.body.password, saltHash)
 
@@ -149,7 +150,7 @@ updateUserInfo: async(req,res)=>{
     password: encryptedNewPassword,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
-    imageURL:imageURL
+    imageUrl: req.body.imageUrl
   }
 
   await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})

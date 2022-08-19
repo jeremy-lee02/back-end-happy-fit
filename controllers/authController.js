@@ -23,6 +23,7 @@ createRefreshTok: (user) => {
   { expiresIn: "365d" }
   )},
 
+
 requestRefreshTok: async (req, res) => {
     //Take refresh token from user
     const refreshTok = req.cookies.refreshToken;

@@ -6,29 +6,19 @@ auth.use(express.json())
 
 const authController = require("../controllers/authController");
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.sendStatus(401)
-  
-    jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
-      if (err) return res.sendStatus(403)
-      req.user = user
-      next()
-    })
-}
+const middlewareController = require('../controllers/middlewareController')
 
 auth.post('/login',authController.login)
 
 auth.post('/signup',authController.register)
 
-auth.delete('/signout',authenticateToken, authController.signOut)
+auth.delete('/signout',middlewareController.authenticateToken, authController.signOut)
 
-auth.get('/users',authenticateToken,authController.getAllUsers)
+auth.get('/users',middlewareController.authenticateToken,authController.getAllUsers)
 
-auth.patch('/user/:id',authenticateToken, authController.updateUserInfo)
+auth.patch('/user/:id',middlewareController.authenticateToken, authController.updateUserInfo)
 
-auth.delete('/user/:id',authenticateToken,authController.deleteUser)
+auth.delete('/user/:id',middlewareController.authenticateToken,authController.deleteUser)
 
 
 

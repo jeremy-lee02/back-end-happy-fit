@@ -6,17 +6,7 @@ const jwt = require('jsonwebtoken')
 const exerciseController = require('../controllers/exerciseController')
 const middlewareController = require('../controllers/middlewareController')
 
-function authenticateToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.sendStatus(401)
-  
-    jwt.verify(token, process.env.SECRET_ACCESS_TOKEN, (err, user) => {
-      if (err) return res.sendStatus(403)
-      req.user = user
-      next()
-    })
-}
+
 //Show all exercises
 router.get('/', exerciseController.showAllExercise)
 
@@ -25,15 +15,15 @@ router.get('/:id',exerciseController.showOneExercise)
 
   
 //Create one exercise
-router.post('/', exerciseController.createExercise)
+router.post('/', middlewareController.authenticateToken, exerciseController.createExercise)
 
 
 //Update one exercise
-router.patch('/:id',exerciseController.updateExercise)
+router.patch('/:id',middlewareController.authenticateToken, exerciseController.updateExercise)
 
 
 //Delete one exercise
-router.delete('/:id', exerciseController.deleteExercise)
+router.delete('/:id', middlewareController.authenticateToken, exerciseController.deleteExercise)
 
 
 //Filter exercise by name

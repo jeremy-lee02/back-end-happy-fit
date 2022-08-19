@@ -54,13 +54,15 @@ createExercise: async(req,res)=>{
 
 updateExercise: async(req,res)=>{
     try{
-    const updatedExercise = Exercise.updateOne({_id:req.params.id},{$set:{
+    
+    const updatedExercise = {
         name:req.body.name,
         description: req.body.description,
-        tip: req.body.tip,
         difficulty: req.body.difficulty,
+        tip: req.body.tip,
         videoURL:req.body.videoURL 
-    }})
+    }
+    await Exercise.findByIdAndUpdate(req.params.id,updatedExercise,{new:true})
     res.json(updatedExercise)}
     catch(err){
         res.json({message: err})

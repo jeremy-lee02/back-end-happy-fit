@@ -7,7 +7,7 @@ let refreshTokens = [];
 
 const authController = {
 
-  createAccessTok: (user) => {
+createAccessTok: (user) => {
   return jwt.sign({
     id: user.id,
     isAdmin: user.admin,
@@ -16,7 +16,7 @@ const authController = {
   { expiresIn: "15m" }
   )},
     
-  createRefreshTok: (user) => {
+createRefreshTok: (user) => {
   return jwt.sign({
     id: user.id,
     isAdmin: user.isAdmin,
@@ -25,7 +25,7 @@ const authController = {
   { expiresIn: "365d" }
   )},
 
-  requestRefreshTok: async (req, res) => {
+requestRefreshTok: async (req, res) => {
     //Take refresh token from user
     const refreshTok = req.cookies.refreshToken;
     //Send error if token is not valid
@@ -55,15 +55,23 @@ const authController = {
 
 register: async (req, res) => {
     try {
+      const users = await User.find()
+      for (let i = 0; i<users.length;i++){
+      if ( req.body.email == users[i].email){
+           return res.send("Email already existed!")
+      }
+      }
       const saltHash = await bcrypt.genSalt(10)
       const encryptedPassword = await bcrypt.hash(req.body.password, saltHash)
       const newUser = new User({
-        username: req.body.username,
         email: req.body.email,
-        password: encryptedPassword
+        password: encryptedPassword,
+        firstname: req.body.firstname,
+        lastname:req.body.lastname,
+        imageUrl: req.body.imageUrl
       })
       const user = await newUser.save()
-      res.status(200).json(user)
+      res.json(user)
     } catch (err) {
       res.json({message:err})
     }
@@ -72,16 +80,16 @@ register: async (req, res) => {
 
 login: async (req, res) => {
     try {
-      const currentUser = await User.findOne({ username: req.body.username })
+      const currentUser = await User.findOne({ email: req.body.email })
       if (!currentUser) {
-        res.status(400).json("Wrong username")
+        res.status(400).json("Invalid email!");
       }
       const correctPassword = await bcrypt.compare(
         req.body.password,
         currentUser.password
       );
       if (!correctPassword) {
-        res.status(400).json("Wrong password")
+        res.status(400).json("Wrong password!")
       }
       if (currentUser && correctPassword) {
         //Generate access token
@@ -137,11 +145,16 @@ updateUserInfo: async(req,res)=>{
   const saltHash = await bcrypt.genSalt(10)
   const encryptedNewPassword = await bcrypt.hash(req.body.password, saltHash)
 
-  const newUser = User.updateOne({_id:req.params.id},{$set:{
+  const updatedUser = {
     email: req.body.email,
-    password: encryptedNewPassword
-}})
-  res.json(newUser)
+    password: encryptedNewPassword,
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    imageURL:imageURL
+  }
+
+  await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
+  res.json(updatedUser)
   },
 
 //Delete account

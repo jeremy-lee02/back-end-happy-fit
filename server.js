@@ -29,13 +29,14 @@ app.use('/nutrition',nutritionRouter)
 
 
 
-try{mongoose.connect("mongodb+srv://duyvu:happyfit@happyfit.zucuyku.mongodb.net/test?retryWrites=true&w=majority",
-    ()=>{console.log('Connected to DB!')
+try{mongoose.connect(process.env.URL, {useNewUrlParser: true, useUnifiedTopology:true})
+    .then(()=>{
+        app.listen(process.env.PORT || 4000, ()=>{
+            console.log("Server is running on port 4000!")
+        })
+        console.log('Connected to DB!')
     })}
 catch(err){
-    res.json({message:err});
+    console.log(err)
 }
 
-app.listen(process.env.PORT || 4000, ()=>{
-    console.log("Server is running on port 4000!")
-})

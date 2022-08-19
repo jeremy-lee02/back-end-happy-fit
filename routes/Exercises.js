@@ -29,11 +29,11 @@ router.post('/', exerciseController.createExercise)
 
 
 //Update one exercise
-router.patch('/:id', middlewareController.authenticate,exerciseController.updateExercise)
+router.patch('/:id',exerciseController.updateExercise)
 
 
 //Delete one exercise
-router.delete('/:id', middlewareController.authenticate, exerciseController.deleteExercise)
+router.delete('/:id', exerciseController.deleteExercise)
 
 
 //Filter exercise by name

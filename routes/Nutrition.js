@@ -25,7 +25,7 @@ router.get('/', nutritionController.showAllFood)
 router.get('/:id',nutritionController.showOneFood)
 
 
-router.post('/',authenticateToken,nutritionController.createFoodRecipe)
+router.post('/',nutritionController.createFoodRecipe)
 
 
 router.patch('/:id',authenticateToken, nutritionController.updateFoodRecipe)

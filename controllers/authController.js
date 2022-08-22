@@ -112,9 +112,6 @@ updateUserInfo: async(req,res)=>{
   
   if(user.email == req.body.email)
   {
-  const saltHash = await bcrypt.genSalt(10)
-  const encryptedNewPassword = await bcrypt.hash(req.body.password, saltHash)
-
   const updatedUser = {
     password: encryptedNewPassword,
     firstname: req.body.firstname,

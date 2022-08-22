@@ -5,6 +5,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const exerciseController = require('../controllers/exerciseController')
 const middlewareController = require('../controllers/middlewareController')
+const Exercise = require('../models/Exercise')
 
 
 //Show all exercises
@@ -28,7 +29,6 @@ router.delete('/:id', middlewareController.authenticateToken, exerciseController
 
 //Filter exercise by name
 router.get('/filterByName/:name', exerciseController.filterExercisesByName)
-
 
 //Filter exercise by category
 router.get('/filterByCategory/:cat', exerciseController.filterExercisesByCategory)

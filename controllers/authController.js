@@ -109,6 +109,7 @@ updateUserInfo: async(req,res)=>{
   const user = await User.findById(req.params.id)
   if (user)
   {
+  
   if(user.email == req.body.email)
   {
   const updatedUser = {
@@ -118,7 +119,9 @@ updateUserInfo: async(req,res)=>{
   }
   await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
   res.json(updatedUser)}
-  else{ res.sendStatus(401)}
+  else{ 
+    console.log(user)
+    res.sendStatus(401)}
   }
   else{ res.sendStatus(404)}
   } catch (err) {

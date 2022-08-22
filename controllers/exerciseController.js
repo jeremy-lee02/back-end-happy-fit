@@ -1,6 +1,4 @@
 const Exercise = require('../models/Exercise')
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const exerciseController = {
 

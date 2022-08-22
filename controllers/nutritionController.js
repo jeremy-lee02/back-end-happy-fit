@@ -1,6 +1,4 @@
 const Nutrition = require('../models/Nutrition')
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
 const nutritionController = {
 

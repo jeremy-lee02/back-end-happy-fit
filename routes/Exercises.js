@@ -1,11 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const exercise = require('../models/Exercise')
 require('dotenv').config()
-const jwt = require('jsonwebtoken')
 const exerciseController = require('../controllers/exerciseController')
 const middlewareController = require('../controllers/middlewareController')
-const Exercise = require('../models/Exercise')
 
 
 //Show all exercises

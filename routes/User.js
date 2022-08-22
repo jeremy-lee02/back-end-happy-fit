@@ -1,6 +1,5 @@
 const express = require('express')
 const auth = express()
-const jwt = require('jsonwebtoken')
 require('dotenv').config()
 auth.use(express.json())
 

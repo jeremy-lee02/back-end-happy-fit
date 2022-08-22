@@ -1,8 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const nutrition = require('../models/Nutrition')
 require('dotenv').config()
-const jwt = require('jsonwebtoken')
 const nutritionController = require('../controllers/nutritionController')
 const middlewareController = require('../controllers/middlewareController')
  

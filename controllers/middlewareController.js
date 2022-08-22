@@ -10,10 +10,10 @@ const authenticateToken = async (req, res, next) => {
   let decodedData;
   if (token){
     decodedData = jwt.verify(token,process.env.SECRET_ACCESS_TOKEN);
-    req.userId =  decodedData?.id;
     next()
   }
   } catch (error) {
+    console.log(error)
     res.json({message: error})
   }}
   

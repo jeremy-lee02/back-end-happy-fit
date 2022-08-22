@@ -71,8 +71,9 @@ updateExercise: async(req,res)=>{
 
 deleteExercise: async(req,res)=>{
     try{
-        const workout = await Exercise.remove({_id:req.params.id})
-        if (workout.acknowledged==true){
+    
+    const workout = await Exercise.remove({_id:req.params.id})
+    if (workout.acknowledged==true){
             res.send("Success!")
     }}
     catch(err){

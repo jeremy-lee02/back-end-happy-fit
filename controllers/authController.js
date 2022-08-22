@@ -123,7 +123,9 @@ updateUserInfo: async(req,res)=>{
   }
   await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
   res.json(updatedUser)}
-  else{ res.sendStatus(401)}}
+  else{ res.sendStatus(401)}
+  }
+  else{ res.sendStatus(404)}
   } catch (err) {
     console.log(err)
     res.json({message:err})

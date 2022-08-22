@@ -106,10 +106,9 @@ getUserById: async (req,res)=> {
 //Change password/email
 updateUserInfo: async(req,res)=>{
   try {
-  const user = User.findById(req.params.id)
+  const user = await User.findById(req.params.id)
   if (user)
   {
-  
   if(user.email == req.body.email)
   {
   const updatedUser = {

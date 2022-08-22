@@ -86,4 +86,4 @@ deleteSchedule: async(req,res)=>{
 }
 
 
-module.exports = exerciseController
+module.exports = scheduleController

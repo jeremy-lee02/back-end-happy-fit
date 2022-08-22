@@ -113,7 +113,6 @@ updateUserInfo: async(req,res)=>{
   if(user.email == req.body.email)
   {
   const updatedUser = {
-    password: encryptedNewPassword,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     imageUrl: req.body.imageUrl

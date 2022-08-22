@@ -109,6 +109,9 @@ updateUserInfo: async(req,res)=>{
   const user = User.findById(req.params.id)
   if (user)
   {
+  
+  if(user.email == req.body.email)
+  {
   const saltHash = await bcrypt.genSalt(10)
   const encryptedNewPassword = await bcrypt.hash(req.body.password, saltHash)
 
@@ -118,8 +121,7 @@ updateUserInfo: async(req,res)=>{
     lastname: req.body.lastname,
     imageUrl: req.body.imageUrl
   }
-  if(updatedUser.email == req.body.email)
-  {await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
+  await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
   res.json(updatedUser)}
   else{ res.sendStatus(401)}}
   } catch (err) {

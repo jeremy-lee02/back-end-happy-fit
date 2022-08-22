@@ -84,13 +84,21 @@ deleteExercise: async(req,res)=>{
 filterExercisesByName: async(req,res)=>{
     try{
     const workout = await Exercise.find()
+    if (!req.params.name){ res.json(workout)}
     const result =[]
     for (let i = 0; i < workout.length; i++) {
         console.log(workout[i])
         if (workout[i].name.includes(req.params.name)){
             result.push(workout[i])
         }}
-    res.json(result)
+    let page = req.query.page
+    const limit = 10
+    const startIndex = (page - 1)*limit
+    const endIndex =page * limit
+    const exercises = result.slice(startIndex, endIndex)
+    if (!page){
+        res.json(result)
+    } else { res.json(exercises)}
     }
     catch(err){
         res.json({message:err})

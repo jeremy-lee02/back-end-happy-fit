@@ -118,7 +118,7 @@ updateUserInfo: async(req,res)=>{
     lastname: req.body.lastname,
     imageUrl: req.body.imageUrl
   }
-  if(updatedUser.email == user.email)
+  if(updatedUser.email == req.body.email)
   {await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
   res.json(updatedUser)}
   else{ res.sendStatus(401)}}

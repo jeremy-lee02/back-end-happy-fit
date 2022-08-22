@@ -24,33 +24,6 @@ createRefreshTok: (user) => {
   )},
 
 
-requestRefreshTok: async (req, res) => {
-    //Take refresh token from user
-    const refreshTok = req.cookies.refreshToken;
-    //Send error if token is not valid
-    if (!refreshTok) return res.status(401).json("Not authenticated")
-    if (!refreshTokens.includes(refreshTok)) return res.status(403).json("Invalid Refresh token!")
-    jwt.verify(refreshTok, process.env.JWT_REFRESH_KEY, (err, user) => {
-      if (err) {
-        res.status(500).json({message:err})
-      }
-      refreshTokens = refreshTokens.filter((token) => token !== refreshTok)
-      //create new access token, refresh token and send to user
-      const newAccessTok = authController.createAccessTok(user)
-      const newRefreshTok = authController.createRefreshTok(user)
-      refreshTokens.push(newRefreshTok)
-      res.cookie("refreshToken", refreshTok, {
-        httpOnly: true,
-        secure:false,
-        path: "/",
-        sameSite: "strict"
-      })
-      res.status(200).json({
-        accessToken: newAccessTok,
-        refreshToken: newRefreshTok
-      })
-  })
-},
 
 register: async (req, res) => {
     try {
@@ -108,9 +81,6 @@ login: async (req, res) => {
 
 signOut: async (req, res) => {
     //Clear cookies when user logs out
-    refreshTokens = refreshTokens.filter((token) => token !== req.body.token)
-    res.clearCookie("refreshToken")
-    res.status(200).json("Logged out successfully!")
   },
   
 
@@ -135,20 +105,29 @@ getUserById: async (req,res)=> {
 
 //Change password/email
 updateUserInfo: async(req,res)=>{
-
+  try {
+  const user = User.findById(req.params.id)
+  if (user)
+  {
   const saltHash = await bcrypt.genSalt(10)
   const encryptedNewPassword = await bcrypt.hash(req.body.password, saltHash)
 
   const updatedUser = {
-    email: req.body.email,
     password: encryptedNewPassword,
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     imageUrl: req.body.imageUrl
   }
-
-  await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
-  res.json(updatedUser)
+  if(updatedUser.email == user.email)
+  {await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
+  res.json(updatedUser)}
+  else{ res.sendStatus(401)}}
+  } catch (err) {
+    console.log(err)
+    res.json({message:err})
+  }
+  
+  
   },
 
 //Delete account

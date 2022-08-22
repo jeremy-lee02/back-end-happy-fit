@@ -49,7 +49,10 @@ createSchedule: async(req,res)=>{
 
 updateSchedule: async(req,res)=>{
     try{
-    
+    const schedule = Schedule.findById(req.params.id)
+    if (req.body.email != schedule.email){
+        res.sendStatus(401)
+    }
     const updatedSchedule = {
         monday: req.body.monday,
         tuesday: req.body.tuesday,
@@ -68,9 +71,12 @@ updateSchedule: async(req,res)=>{
 
 deleteSchedule: async(req,res)=>{
     try{
-    
-    const schedule = await Schedule.remove({_id:req.params.id})
-    if (schedule.acknowledged==true){
+    const schedule = Schedule.findById(req.params.id)
+    if (req.body.email != schedule.email){
+        res.sendStatus(401)
+    }
+    const data = await Schedule.remove({_id:req.params.id})
+    if (data.acknowledged==true){
             res.send("Success!")
     }}
     catch(err){

@@ -4,6 +4,7 @@ const app = express()
 const cookieParser = require("cookie-parser");
 const exerciseRouter = require('./routes/Exercises')
 const nutritionRouter = require('./routes/Nutrition')
+const scheduleRouter = require('./routes/Schedule')
 const authRouter = require('./routes/User')
 const mongoose = require('mongoose');
 const BodyParser = require('body-parser')
@@ -17,16 +18,13 @@ app.use(
 app.use(express.json())
 app.use(BodyParser.json())
 
-app.get('/home',(req,res)=>{
-    res.sendFile(__dirname+ "/index.html")
-})
-
 app.use('/exercises',exerciseRouter)
 
 app.use('/auth',authRouter)
 
 app.use('/nutrition',nutritionRouter)
 
+app.use('/schedule',scheduleRouter)
 
 
 try{mongoose.connect(process.env.URL, {useNewUrlParser: true, useUnifiedTopology:true})

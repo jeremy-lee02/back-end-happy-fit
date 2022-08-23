@@ -7,15 +7,18 @@ showAllExercise: async(req,res)=>{
     try{
     const result =[]
     const workout = await Exercise.find()
-
+    
     let page = req.query.page
     let value = req.query.value
+    if (!page && !value){
+        res.json(workout)
+    } 
+
     const limit = 10
     const startIndex = (page - 1)*limit
     const endIndex = page * limit
-    let exercises = result.slice(startIndex, endIndex)
-
-    
+    let exercises = workout.slice(startIndex, endIndex)
+    console.log(endIndex)
     if (req.query.value){
     for (let i = 0; i < workout.length; i++) {
         if (workout[i].name.includes(req.query.value)){
@@ -23,13 +26,8 @@ showAllExercise: async(req,res)=>{
         }}
         exercises = result.slice(startIndex, endIndex)
         res.json(exercises)
-    }
-    
-    if (!page && !value){
-        res.json(workout)
-    } else{
-        exercises = workout.slice(startIndex,endIndex)
-        res.json(exercises)} }
+    } else {res.json(exercises)}
+     }
      
     catch(err){
     console.log(err)

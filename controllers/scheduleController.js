@@ -52,7 +52,7 @@ updateSchedule: async(req,res)=>{
     const schedule = Schedule.findById(req.params.id)
     if (req.body.email != schedule.email){
         res.sendStatus(401)
-    }
+    } else {
     const updatedSchedule = {
         monday: req.body.monday,
         tuesday: req.body.tuesday,
@@ -63,7 +63,8 @@ updateSchedule: async(req,res)=>{
         sunday: req.body.sunday
     }
     await Schedule.findByIdAndUpdate(req.params.id,updatedSchedule,{new:true})
-    res.json(updatedSchedule)}
+    res.json(updatedSchedule)
+    }}
     catch(err){
         res.sendStatus(400).json({message: err})
     }},
@@ -73,12 +74,12 @@ deleteSchedule: async(req,res)=>{
     try{
     const schedule = Schedule.findById(req.params.id)
     if (req.body.email != schedule.email){
-        res.sendStatus(401)
-    }
+    res.sendStatus(401)
+    } else {
     const data = await Schedule.remove({_id:req.params.id})
     if (data.acknowledged==true){
             res.send("Success!")
-    }}
+    }}}
     catch(err){
         res.sendStatus(400).json({message: err})
     }},

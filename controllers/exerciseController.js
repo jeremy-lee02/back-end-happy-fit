@@ -44,7 +44,26 @@ showOneExercise: async(req,res)=>{
         res.json({message:err})
     }},
 
+
+getExerciseByName: async(req,res)=>{
+    try{
+        const exercise = await Exercise.find({name: req.body.name});
+        res.json(exercise)
+    }
+    catch(err){
+        res.json({message:err})
+    }},
+
+
 createExercise: async(req,res)=>{
+    
+    const exercises = await Exercise.find()
+      for (let i = 0; i< exercises.length;i++){
+      if ( req.body.name == exercises[i].name){
+           return res.send("Exercise name already existed!")
+      }
+      }
+
     const workout = new Exercise({
         name:req.body.name,
         description: req.body.description,

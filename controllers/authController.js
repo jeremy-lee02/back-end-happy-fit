@@ -2,6 +2,7 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config()
+const Schedule = require("../models/Schedule");
 
 let refreshTokens = [];
 
@@ -43,6 +44,17 @@ register: async (req, res) => {
         imageUrl: req.body.imageUrl
       })
       const user = await newUser.save()
+      const schedule = new Schedule ({
+        email: req.body.email,
+        monday:[],
+        tuesday:[],
+        wednesday:[],
+        thursday:[],
+        friday:[],
+        saturday:[],
+        sunday:[]
+      })
+      await schedule.save();
       res.json(user)
     } catch (err) {
       res.json({message:err})

@@ -3,7 +3,8 @@ const mongoose = require('mongoose')
 const ScheduleSchema = mongoose.Schema({
     email:{
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     monday:{
         type: [String]

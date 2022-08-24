@@ -17,6 +17,9 @@ const ExerciseSchema = mongoose.Schema({
     tip: String,
     videoURL: {
         type: String
+    },
+    imageUrl: {
+        type: String
     }},
     {collection:'exercises'}
 )

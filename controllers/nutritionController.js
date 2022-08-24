@@ -28,7 +28,8 @@ createFoodRecipe: async(req,res)=>{
         description:req.body.description,
         ingredient:req.body.ingredient,
         nutrition:req.body.nutrition,
-        instruction:req.body.instruction
+        instruction:req.body.instruction,
+        imageUrl:req.body.imageUrl
     })
     
     recipe.save()
@@ -43,15 +44,18 @@ createFoodRecipe: async(req,res)=>{
 
 updateFoodRecipe: async(req,res)=>{
     try{
-    const updatedNutrition = Nutrition.updateOne({_id:req.params.id},{$set:{
+    const updatedNutrition = {
         name:req.body.name,
         description:req.body.description,
         ingredient:req.body.ingredient,
         nutrition:req.body.nutrition,
-        instruction:req.body.instruction
-    }})
+        instruction:req.body.instruction,
+        imageUrl: req.body.imageUrl
+    }
+    await Nutrition.findByIdAndUpdate(req.params.id,updatedNutrition,{new:true})
     res.json(updatedNutrition)}
     catch(err){
+        console.log(err)
         res.json({message: err})
     }},
 

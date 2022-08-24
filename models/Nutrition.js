@@ -18,8 +18,10 @@ const RecipeSchema = mongoose.Schema({
     },
     instruction:{
         type: String
+    },
+    imageUrl:{
+        type: String
     }},
-    
     {collection:'recipes'}
 )
 

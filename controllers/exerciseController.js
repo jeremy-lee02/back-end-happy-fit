@@ -11,7 +11,7 @@ showAllExercise: async(req,res)=>{
     let page = req.query.page
     let value = req.query.value
     if (!page && !value){
-        res.json(workout)
+        return res.json(workout)
     } 
 
     const limit = 10
@@ -70,7 +70,8 @@ createExercise: async(req,res)=>{
         tip: req.body.tip,
         difficulty: req.body.difficulty,
         category:req.body.category,
-        videoURL:req.body.videoURL
+        videoURL:req.body.videoURL,
+        imageUrl: req.body.imageUrl
     })
     
     workout.save()
@@ -91,7 +92,8 @@ updateExercise: async(req,res)=>{
         description: req.body.description,
         difficulty: req.body.difficulty,
         tip: req.body.tip,
-        videoURL:req.body.videoURL 
+        videoURL:req.body.videoURL,
+        imageUrl: req.body.imageUrl
     }
     await Exercise.findByIdAndUpdate(req.params.id,updatedExercise,{new:true})
     res.json(updatedExercise)}

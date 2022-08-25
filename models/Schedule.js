@@ -7,25 +7,25 @@ const ScheduleSchema = mongoose.Schema({
         unique: true
     },
     monday:{
-        type: [String]
+        type: Array
     },
     tuesday:{
-        type: [String]
+        type: Array
     },
     wednesday:{
-        type: [String]
+        type: Array
     },
     thursday:{
-        type: [String]
+        type: Array
     },
     friday:{
-        type: [String]
+        type: Array
     },
     saturday:{
-        type: [String]
+        type: Array
     },
     sunday:{
-        type: [String]
+        type: Array
     },
 },
     

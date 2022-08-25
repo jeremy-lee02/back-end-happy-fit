@@ -6,10 +6,10 @@ const middlewareController = require('../controllers/middlewareController')
 
 
 //Show all exercises
-router.get('/', middlewareController.authenticateToken, scheduleController.showAllSchedules)
+router.get('/all', middlewareController.authenticateToken, scheduleController.showAllSchedules)
 
 //Show a specific exercise
-router.get('/:id', middlewareController.authenticateToken,scheduleController.showOneSchedule)
+router.get('/', middlewareController.authenticateToken,scheduleController.getScheduleByEmail)
 
   
 //Create one exercise

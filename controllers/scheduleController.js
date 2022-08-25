@@ -17,9 +17,10 @@ showAllSchedules: async(req,res)=>{
 }},
 
 
-showOneSchedule: async(req,res)=>{
+getScheduleByEmail: async(req,res)=>{
     try{
-        const schedule = await Schedule.findById(req.params.id);
+        const schedules= await Schedule.find({email: req.body.email})
+        const schedule = schedules[0]
         res.json(schedule)
     }
     catch(err){

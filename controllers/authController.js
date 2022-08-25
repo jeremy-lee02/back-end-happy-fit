@@ -66,14 +66,14 @@ login: async (req, res) => {
     try {
       const currentUser = await User.findOne({ email: req.body.email })
       if (!currentUser) {
-        res.status(400).json("Invalid email!");
+        return res.status(400).json("Invalid email!");
       }
       const correctPassword = await bcrypt.compare(
         req.body.password,
         currentUser.password
       );
       if (!correctPassword) {
-        res.status(400).json("Wrong password!")
+        return res.status(400).json("Wrong password!")
       }
       if (currentUser && correctPassword) {
         //Generate access token

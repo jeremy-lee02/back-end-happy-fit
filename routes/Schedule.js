@@ -6,10 +6,10 @@ const middlewareController = require('../controllers/middlewareController')
 
 
 //Show all exercises
-router.get('/', scheduleController.showAllSchedules)
+router.get('/', middlewareController.authenticateToken, scheduleController.showAllSchedules)
 
 //Show a specific exercise
-router.get('/:id',scheduleController.showOneSchedule)
+router.get('/:id', middlewareController.authenticateToken,scheduleController.showOneSchedule)
 
   
 //Create one exercise
@@ -18,6 +18,8 @@ router.post('/', middlewareController.authenticateToken, scheduleController.crea
 
 //Update one exercise
 router.patch('/:id',middlewareController.authenticateToken, scheduleController.updateSchedule)
+
+router.patch('/:userId/schedule',middlewareController.authenticateToken, scheduleController.addExercise)
 
 
 //Delete one exercise

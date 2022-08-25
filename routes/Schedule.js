@@ -23,7 +23,7 @@ router.patch('/:userId/:scheduleId',middlewareController.authenticateToken, sche
 
 
 //Delete one exercise
-router.delete('/:id', middlewareController.authenticateToken, scheduleController.deleteSchedule)
+router.delete('/:userId/:scheduleId', middlewareController.authenticateToken, scheduleController.deleteSchedule)
 
 
 module.exports = router

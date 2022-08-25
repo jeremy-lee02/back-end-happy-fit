@@ -78,23 +78,28 @@ addExercise: async(req,res)=>{
             return res.sendStatus(401)}
         const addedExercise = await Exercise.findById(req.body.id)
         const day = req.body.day
-        console.log(day)
-        console.log(userSchedule.monday)
         switch (day){
             case 'Monday':
             userSchedule.monday.push(addedExercise);
+            break;
             case 'Tuesday':
             userSchedule.tuesday.push(addedExercise);
+            break;
             case 'Wednesday':
             userSchedule.wednesday.push(addedExercise);
+            break;
             case 'Thursday':
             userSchedule.thursday.push(addedExercise);
+            break;
             case 'Friday':
             userSchedule.friday.push(addedExercise);
+            break;
             case 'Saturday':
             userSchedule.saturday.push(addedExercise);
+            break;
             case 'Sunday':
             userSchedule.sunday.push(addedExercise);
+            break;
         }
         await Schedule.findByIdAndUpdate(userSchedule._id, userSchedule, {new:true})
         res.json(userSchedule)
@@ -106,16 +111,63 @@ addExercise: async(req,res)=>{
 
 deleteSchedule: async(req,res)=>{
     try{
-    const schedule = Schedule.findById(req.params.id)
-    if (req.body.email != schedule.email){
+    const user = await User.findById(req.params.userId)
+    let userSchedule = await Schedule.findById(req.params.scheduleId)
+    if (user.email != userSchedule.email){
         return res.sendStatus(401)}
-    else {
-    const data = await Schedule.remove({_id:req.params.id})
-    if (data.acknowledged==true){
-            res.send("Item removed!")
-    }}}
+    else {       
+    const removedExercise = await Exercise.findById(req.body.id)
+    const day = req.body.day
+    let exerciseIndex = 0;
+    switch (day){
+        case 'Monday':
+            exerciseIndex = userSchedule.monday.findIndex(object => {
+                return object == removedExercise;
+              })
+            userSchedule.monday.splice(exerciseIndex,1);
+            break;
+        case 'Tuesday':
+            exerciseIndex = userSchedule.tuesday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.tuesday.splice(exerciseIndex,1);
+            break;
+        case 'Wednesday':
+            exerciseIndex = userSchedule.wednesday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.wednesday.splice(exerciseIndex,1);
+            break;
+        case 'Thursday':
+            exerciseIndex = userSchedule.thursday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.thursday.splice(exerciseIndex,1);
+            break;
+        case 'Friday':
+            exerciseIndex = userSchedule.friday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.friday.splice(exerciseIndex,1);
+            break;
+        case 'Saturday':
+            exerciseIndex = userSchedule.saturday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.saturday.splice(exerciseIndex,1);
+            break;
+        case 'Sunday':
+            exerciseIndex = userSchedule.sunday.findIndex(object => {
+                return object == removedExercise;
+              });
+            userSchedule.sunday.splice(exerciseIndex,1);
+            break;
+    }
+    await Schedule.findByIdAndUpdate(userSchedule._id, userSchedule, {new:true})
+    res.json(userSchedule)}}
     catch(err){
-        res.sendStatus(400).json({message: err})
+    console.log(err)
+    res.sendStatus(400)
 }},
 
 }

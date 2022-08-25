@@ -19,7 +19,7 @@ router.post('/', middlewareController.authenticateToken, scheduleController.crea
 //Update one exercise
 router.patch('/:id',middlewareController.authenticateToken, scheduleController.updateSchedule)
 
-router.patch('/:userId/schedule',middlewareController.authenticateToken, scheduleController.addExercise)
+router.patch('/:userId/:scheduleId',middlewareController.authenticateToken, scheduleController.addExercise)
 
 
 //Delete one exercise

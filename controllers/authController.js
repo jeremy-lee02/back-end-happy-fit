@@ -72,6 +72,8 @@ login: async (req, res) => {
         req.body.password,
         currentUser.password
       );
+      const schedules= await Schedule.find({email: req.body.email})
+      const schedule = schedules[0]
       if (!correctPassword) {
         return res.status(400).json("Wrong password!")
       }
@@ -82,7 +84,7 @@ login: async (req, res) => {
         const refreshTok = authController.createRefreshTok(currentUser)
         refreshTokens.push(refreshTok);
         //STORE REFRESH TOKEN IN COOKIE
-        res.json({ currentUser, accessTok, refreshTok })
+        res.json({ currentUser, accessTok, refreshTok, schedule })
       } 
     } catch (err) {
       console.log(err)

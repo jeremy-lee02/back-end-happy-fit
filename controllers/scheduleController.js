@@ -116,7 +116,7 @@ deleteSchedule: async(req,res)=>{
     let userSchedule = await Schedule.findById(req.params.scheduleId)
     if (user.email != userSchedule.email){
         return res.sendStatus(401)}
-    else {       
+         
     const removedExercise = await Exercise.findById(req.body.id)
     const day = req.body.day
     let exerciseIndex = 0;
@@ -165,10 +165,10 @@ deleteSchedule: async(req,res)=>{
             break;
     }
     await Schedule.findByIdAndUpdate(userSchedule._id, userSchedule, {new:true})
-    res.json(userSchedule)}}
+    res.json(userSchedule)}
     catch(err){
-    console.log(err)
-    res.sendStatus(400)
+        console.log(err)
+        res.sendStatus(400)
 }},
 
 }

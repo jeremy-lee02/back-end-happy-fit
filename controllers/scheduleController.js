@@ -123,44 +123,47 @@ deleteSchedule: async(req,res)=>{
     switch (day){
         case 'Monday':
             exerciseIndex = userSchedule.monday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
+                return (object.name == removedExercise.name)
               })
+              
             userSchedule.monday.splice(exerciseIndex,1);
             break;
         case 'Tuesday':
             exerciseIndex = userSchedule.tuesday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                return (object.name == removedExercise.name)
+              })
             userSchedule.tuesday.splice(exerciseIndex,1);
             break;
         case 'Wednesday':
             exerciseIndex = userSchedule.wednesday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                return (object.name == removedExercise.name)
+              })
             userSchedule.wednesday.splice(exerciseIndex,1);
             break;
         case 'Thursday':
             exerciseIndex = userSchedule.thursday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                return (object.name == removedExercise.name)
+              })
             userSchedule.thursday.splice(exerciseIndex,1);
             break;
         case 'Friday':
             exerciseIndex = userSchedule.friday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                return (object.name == removedExercise.name)
+              })
             userSchedule.friday.splice(exerciseIndex,1);
             break;
         case 'Saturday':
             exerciseIndex = userSchedule.saturday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                return (object.name == removedExercise.name)
+              })
             userSchedule.saturday.splice(exerciseIndex,1);
             break;
         case 'Sunday':
             exerciseIndex = userSchedule.sunday.findIndex(object => {
-                return JSON.stringify(object) == JSON.stringify(removedExercise);
-              });
+                console.log("Object ", object, "Data ", removedExercise)
+                return (object.name == removedExercise.name)
+                
+              })
             userSchedule.sunday.splice(exerciseIndex,1);
             break;
     }

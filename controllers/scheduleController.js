@@ -72,33 +72,82 @@ updateSchedule: async(req,res)=>{
 
 addExercise: async(req,res)=>{
     try {
-        
+        //Find the user account
         const user = await User.findById(req.params.userId)
+        if (!user){
+            return res.sendStatus(404)
+        }
+
+        //Find the user work out schedule
         let userSchedule = await Schedule.findById(req.params.scheduleId)
+        if (!userSchedule){
+            return res.sendStatus(404)
+        }
+
+        //Verify if the user and the schedule match
         if (user.email != userSchedule.email){
             return res.sendStatus(401)}
+
+        //Find the exercise that user want to add
         const addedExercise = await Exercise.findById(req.body.id)
+        if (!addedExercise){
+            return res.sendStatus(404)
+        }
+
+        //Get the day value to add the exercise to
         const day = req.body.day
+        const exercisenName = addedExercise.name
+        
+        //Add the exercise to the desired day
         switch (day){
             case 'Monday':
+            for (let i=0;i<userSchedule.monday.length;i++){
+                if (userSchedule.monday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.monday.push(addedExercise);
             break;
             case 'Tuesday':
+                for (let i=0;i<userSchedule.tuesday.length;i++){
+                if (userSchedule.tuesday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
+                
             userSchedule.tuesday.push(addedExercise);
             break;
             case 'Wednesday':
+                for (let i=0;i<userSchedule.wednesday.length;i++){
+                if (userSchedule.wednesday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.wednesday.push(addedExercise);
             break;
             case 'Thursday':
+                for (let i=0;i<userSchedule.thursday.length;i++){
+                if (userSchedule.thursday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.thursday.push(addedExercise);
             break;
             case 'Friday':
+                for (let i=0;i<userSchedule.friday.length;i++){
+                if (userSchedule.friday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.friday.push(addedExercise);
             break;
             case 'Saturday':
+                for (let i=0;i<userSchedule.saturday.length;i++){
+                if (userSchedule.saturday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.saturday.push(addedExercise);
             break;
             case 'Sunday':
+                for (let i=0;i<userSchedule.sunday.length;i++){
+                if (userSchedule.sunday[i].name == exercisenName){
+                    return res.sendStatus(403)
+                }}
             userSchedule.sunday.push(addedExercise);
             break;
         }
@@ -125,6 +174,8 @@ deleteSchedule: async(req,res)=>{
             exerciseIndex = userSchedule.monday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+
+            if (exerciseIndex < 0){break;}
               
             userSchedule.monday.splice(exerciseIndex,1);
             break;
@@ -132,30 +183,47 @@ deleteSchedule: async(req,res)=>{
             exerciseIndex = userSchedule.tuesday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+
+            if (exerciseIndex < 0){break;}
+
             userSchedule.tuesday.splice(exerciseIndex,1);
             break;
         case 'Wednesday':
             exerciseIndex = userSchedule.wednesday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+              
+            if (exerciseIndex < 0){break;}
+
             userSchedule.wednesday.splice(exerciseIndex,1);
+
             break;
         case 'Thursday':
             exerciseIndex = userSchedule.thursday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+
+            if (exerciseIndex < 0){break;}
+
             userSchedule.thursday.splice(exerciseIndex,1);
+
             break;
         case 'Friday':
             exerciseIndex = userSchedule.friday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+
+            if (exerciseIndex < 0){break;}
+
             userSchedule.friday.splice(exerciseIndex,1);
             break;
         case 'Saturday':
             exerciseIndex = userSchedule.saturday.findIndex(object => {
                 return (object.name == removedExercise.name)
               })
+            
+            if (exerciseIndex < 0){break;}
+
             userSchedule.saturday.splice(exerciseIndex,1);
             break;
         case 'Sunday':
@@ -164,8 +232,12 @@ deleteSchedule: async(req,res)=>{
                 return (object.name == removedExercise.name)
                 
               })
+
+            if (exerciseIndex < 0){break;}
+
             userSchedule.sunday.splice(exerciseIndex,1);
-            break;
+        break;
+        
     }
     await Schedule.findByIdAndUpdate(userSchedule._id, userSchedule, {new:true})
     res.json(userSchedule)}

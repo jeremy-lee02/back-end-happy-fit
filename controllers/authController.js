@@ -54,6 +54,7 @@ register: async (req, res) => {
         saturday:[],
         sunday:[]
       })
+      
       await schedule.save();
       res.json(user)
     } catch (err) {
@@ -73,7 +74,11 @@ login: async (req, res) => {
         currentUser.password
       );
       const schedules= await Schedule.find({email: req.body.email})
+      const beginnerWorkout = await Schedule.findById('630ca2535517843304fe68d2');
       const schedule = schedules[0]
+
+      if (!schedule){return res.sendStatus(404)}
+
       if (!correctPassword) {
         return res.status(400).json("Wrong password!")
       }
@@ -84,7 +89,7 @@ login: async (req, res) => {
         const refreshTok = authController.createRefreshTok(currentUser)
         refreshTokens.push(refreshTok);
         //STORE REFRESH TOKEN IN COOKIE
-        res.json({ currentUser, accessTok, refreshTok, schedule })
+        res.json({ currentUser, accessTok, refreshTok, schedule, beginnerWorkout })
       } 
     } catch (err) {
       console.log(err)
@@ -93,10 +98,6 @@ login: async (req, res) => {
   },
 
 
-signOut: async (req, res) => {
-    //Clear cookies when user logs out
-  },
-  
 
 getAllUsers: async (req,res)=> {
     try{

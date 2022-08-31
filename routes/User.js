@@ -11,8 +11,6 @@ auth.post('/login',authController.login)
 
 auth.post('/signup',authController.register)
 
-auth.delete('/signout',middlewareController.authenticateToken, authController.signOut)
-
 auth.get('/users',middlewareController.authenticateToken,authController.getAllUsers)
 
 auth.get('/user/:id',middlewareController.authenticateToken,authController.getUserById)

@@ -12,12 +12,12 @@ router.get('/', nutritionController.showAllFood)
 router.get('/:id',nutritionController.showOneFood)
 
 
-router.post('/', nutritionController.createFoodRecipe)
+router.post('/', middlewareController.authenticateToken, nutritionController.createFoodRecipe)
 
 
-router.patch('/:id', nutritionController.updateFoodRecipe)
+router.patch('/:id', middlewareController.authenticateToken, nutritionController.updateFoodRecipe)
 
-router.delete('/:id', nutritionController.deleteFoodRecipe)
+router.delete('/:id', middlewareController.authenticateToken, nutritionController.deleteFoodRecipe)
 
 router.get('/filterByName/:name',nutritionController.filterFoodByName)
 

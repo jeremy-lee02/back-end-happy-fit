@@ -127,6 +127,21 @@ updateUserInfo: async(req,res)=>{
   
   if(user.email == req.body.email)
   {
+  const passwordLen = req.body.password.length
+  if (passwordLen>0 && passwordLen <= 16){
+
+  const saltHash = await bcrypt.genSalt(10)
+  const encryptedPassword = await bcrypt.hash(req.body.password, saltHash)
+  const userWithUpdatedPassword = {
+    firstname: req.body.firstname,
+    lastname: req.body.lastname,
+    imageUrl: req.body.imageUrl,
+    password: encryptedPassword
+  }
+  await User.findByIdAndUpdate(req.params.id, userWithUpdatedPassword, {new:true})
+  return res.json(userWithUpdatedPassword)  
+  }
+
   const updatedUser = {
     firstname: req.body.firstname,
     lastname: req.body.lastname,
@@ -135,17 +150,15 @@ updateUserInfo: async(req,res)=>{
   await User.findByIdAndUpdate(req.params.id, updatedUser, {new:true})
   res.json(updatedUser)}
   else{ 
-    console.log(user)
-    res.sendStatus(401)}
+    return res.sendStatus(401)}
   }
-  else{ res.sendStatus(404)}
+  else{ 
+    return res.sendStatus(404)}
   } catch (err) {
     console.log(err)
     res.json({message:err})
   }
-  
-  
-  },
+},
 
 //Delete account
 deleteUser:async(req,res)=>{

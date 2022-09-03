@@ -14,7 +14,7 @@ const authenticateToken = async (req, res, next) => {
   }
   } catch (error) {
     if (error.name=="TokenExpiredError"){
-      return res.status(401).json("TokenExpiredError")
+      return res.json("TokenExpiredError")
     }
     res.json({message: error})
   }}

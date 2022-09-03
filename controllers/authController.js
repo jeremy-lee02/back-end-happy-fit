@@ -13,7 +13,7 @@ createAccessTok: (user) => {
     id: user.id
   },
   process.env.SECRET_ACCESS_TOKEN,
-  { expiresIn: "30m" }
+  { expiresIn: "5m" }
   )},
     
 createRefreshTok: (user) => {

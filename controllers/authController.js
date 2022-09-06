@@ -13,7 +13,7 @@ createAccessTok: (user) => {
     id: user.id
   },
   process.env.SECRET_ACCESS_TOKEN,
-  { expiresIn: "5m" }
+  { expiresIn: "30m" }
   )},
     
 createRefreshTok: (user) => {
@@ -67,7 +67,7 @@ login: async (req, res) => {
     try {
       const currentUser = await User.findOne({ email: req.body.email })
       if (!currentUser) {
-        return res.status(400).json("Invalid email!");
+        return res.json("User with that email doesn't exist!");
       }
       const correctPassword = await bcrypt.compare(
         req.body.password,
@@ -77,10 +77,10 @@ login: async (req, res) => {
       const beginnerWorkout = await Schedule.findById('630ca2535517843304fe68d2');
       const schedule = schedules[0]
 
-      if (!schedule){return res.sendStatus(404)}
+      if (!schedule){return res.json("This user doesn't have a schedule!")}
 
       if (!correctPassword) {
-        return res.status(400).json("Wrong password!")
+        return res.json("Wrong password!")
       }
       if (currentUser && correctPassword) {
         //Generate access token
